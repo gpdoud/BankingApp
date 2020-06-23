@@ -13,6 +13,10 @@ namespace BankingApp {
         private static Account[] AccountArray = new Account[5];
         private static int NextIndex = 0;
 
+        public void Print() {
+            Console.WriteLine($"Nbr: {AccountNumber}, Desc: {Description}, Bal: {GetBalance()}");
+        }
+
         public static void AddAccount(Account AccountInstance) {
             AccountArray[NextIndex] = AccountInstance;
             NextIndex++;
@@ -57,19 +61,30 @@ namespace BankingApp {
         }
 
         public bool Withdraw(double Amount) {
-            if(IsAmountNegative(Amount) 
-                || InsufficientFunds(Amount)) {
+            if(IsAmountNegative(Amount)) {
                 return false;
             }
-            
+            try {
+                InsufficientFunds(Amount);
+            } catch (Exceptions.InsufficientFundsException ex) {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+
+
             Balance -= Amount;
             return true;
         }
 
         private bool InsufficientFunds(double Amount) {
             if(Amount > Balance) {
-                Console.WriteLine("Insufficient funds");
-                return true;
+                var msg = $"Balance is {Balance}; Withdraw amount is {Amount}";
+                var ex = new Exceptions.InsufficientFundsException(msg);
+                ex.AccountNumber = AccountNumber;
+                ex.AccountDescription = Description;
+                ex.AccountBalance = Balance;
+                ex.WithdrawAmount = Amount;
+                throw ex;
             }
             return false;
         }

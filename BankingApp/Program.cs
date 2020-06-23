@@ -9,6 +9,7 @@ namespace BankingApp {
             chk1.Deposit(100);
             chk1.WriteCheck("Cash", 10, 101);
             chk1.WriteCheck("Apple", 2);
+            chk1.Print();
 
             var sav1 = new Savings();
             sav1.InterestRate(0.12);
