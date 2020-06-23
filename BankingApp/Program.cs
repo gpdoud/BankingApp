@@ -3,11 +3,18 @@
 namespace BankingApp {
     class Program {
 
-        static int i;
-        
         static void Main(string[] args) {
 
-            i = 1;
+            var chk1 = new Checking();
+            chk1.Deposit(100);
+            chk1.WriteCheck("Cash", 10, 101);
+            chk1.WriteCheck("Apple", 2);
+
+            var sav1 = new Savings();
+            sav1.InterestRate(0.12);
+            sav1.Deposit(100);
+            sav1.CalculateAndDepositInterest(9);
+            Console.WriteLine($"Balance is {sav1.GetBalance()}");
 
             Console.WriteLine($"Routing number is {Account.GetRoutingNumber()}");
 

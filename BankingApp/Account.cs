@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace BankingApp {
-    class Account {
+    public class Account {
 
         private static int NextAccountNumber = 1;
         public int AccountNumber { get; private set; }
